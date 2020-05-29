@@ -1,4 +1,5 @@
 # DDS-QMP Cuarta Iteracion
+## Faltan cosas en la implementacion, Ej Algoritmo de combinacion de prendas + los Test.
 ![](QueMePongo4.png)
 
 Como usuario de QuéMePongo, quiero recibir sugerencias de atuendos para vestirme ajustándome a las condiciones climáticas con ropa de mi agrado
