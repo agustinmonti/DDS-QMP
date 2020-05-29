@@ -1,0 +1,97 @@
+@startuml
+class Guardarropas
+package Prenda{
+    class Prenda
+    enum Material
+    enum TipoPrenda
+    enum Categoria
+    enum Color
+    enum Trama
+}
+package Sugerencia{
+    class GeneradorDeAtuendos
+    class Atuendo
+    package Clima{
+        class AccuWeather
+        class AccuWeatherAPI
+        interface Clima
+        class MockClima
+    }
+    package Filtros{
+        interface Filtro
+        class FiltroTemperatura
+        class FiltroAtuendoCompleto
+    }
+}
+class Prenda{
+    +aptaParaTemperatura(double Temp):boolean
+}
+Prenda --> Material
+Prenda --> TipoPrenda
+Prenda --> "1..2" Color
+Prenda --> Trama
+TipoPrenda --> Categoria
+
+enum Color{
+}
+enum Material{
+}
+enum Categoria{
+SUPERIOR
+INFERIOR
+CALZADO
+ACCESORIO
+}
+enum TipoPrenda {
+ZAPATO
+PANTALON
+REMERA
+RELOJ
+...
++getCategoria():Categoria
+}
+class MockClima{
++getTemperatura(String Ciudad):double
+}
+AccuWeather .|> Clima
+MockClima .|> Clima
+AccuWeather --> AccuWeatherAPI
+interface Clima{
++getTemperatura(String Ciudad):double
+}
+class AccuWeather{
++getTemperatura(String Ciudad):double
+}
+class AccuWeatherAPI{
++getWeather(String ciudad):List<Map<String, Object>>
+}
+
+FiltroTemperatura .|> Filtro
+FiltroAtuendoCompleto .|> Filtro
+FiltroAtuendoCompleto --> Categoria
+FiltroTemperatura --> Clima
+interface Filtro{
++filtrar(List<Atuendo> atuendos):List<Atuendo>
+}
+class FiltroTemperatura{
++filtrar(List<Atuendo> atuendos):List<Atuendo>
+}
+class FiltroAtuendoCompleto{
++filtrar(List<Atuendo> atuendos):List<Atuendo>
+-estaCompleto(Atuendo atuendo):Boolean
+}
+GeneradorDeAtuendos --> "1..*" Filtro
+GeneradorDeAtuendos --> "*" Atuendo
+Atuendo --> "4..*" Prenda
+Guardarropas --> "*" Prenda
+Guardarropas --> GeneradorDeAtuendos
+class Guardarropas{
+generador: GeneradorDeAtuendos
++pedirSugerencias():List<Atuendo>
++elegirAtuendo():void
+}
+class GeneradorDeAtuendos{
++combinar(List<Prenda> prendas):List<Atuendo>
++filtrar(List<Atuendo> atuendos):List<Atuendo>
+}
+@enduml
