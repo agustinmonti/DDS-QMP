@@ -51,7 +51,9 @@ RELOJ
 +getCategoria():Categoria
 }
 class MockClima{
+-cantidadLlamados:Integer
 +getTemperatura(String Ciudad):double
+-puedoHacerLlamado():Boolean
 }
 AccuWeather .|> Clima
 MockClima .|> Clima
@@ -60,7 +62,9 @@ interface Clima{
 +getTemperatura(String Ciudad):double
 }
 class AccuWeather{
+-cantidadLlamados:Integer
 +getTemperatura(String Ciudad):double
+-puedoHacerLlamado():Boolean
 }
 class AccuWeatherAPI{
 +getWeather(String ciudad):List<Map<String, Object>>
