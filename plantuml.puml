@@ -117,9 +117,9 @@ class Usuario{
 -userID:Integer
 +nuevoGuardarropas()
 +compartirCon(Usuario)
-+dejarDeCompartirCon(Usuario)
-+sugerirQuitarPrenda(Prenda,Guardarropas)
-+sugerirAgregarPrenda(Prenda,Guardarropas)
++agregarGuardarropas(Guardarropa guardarropa)
++quitarGuardarropas(Guardarropa guardarropa)
++nuevaInteraccion(Interaccion interaccion)
 }
 interface Interaccion{
 +aceptar()
