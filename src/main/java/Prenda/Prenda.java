@@ -1,5 +1,6 @@
 package Prenda;
 
+import Usuario.*;
 import java.util.Objects;
 
 public class Prenda {
@@ -16,5 +17,11 @@ public class Prenda {
     }
     public boolean tieneUnSoloColor(){
         return this.color2==null;
+    }
+    public void recomendarAgregar(Usuario usuario, Guardarropa guardarropa){
+        usuario.nuevaInteraccion(new AltaPrenda(this,guardarropa));
+    }
+    public void recomendarQuitar(Usuario usuario, Guardarropa guardarropa){
+        usuario.nuevaInteraccion(new BajaPrenda(this,guardarropa));
     }
 }

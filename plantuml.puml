@@ -1,5 +1,6 @@
 @startuml
 class Guardarropas
+class Usuario
 package Prenda{
     class Prenda
     enum Material
@@ -89,13 +90,28 @@ GeneradorDeAtuendos --> "*" Atuendo
 Atuendo --> "4..*" Prenda
 Guardarropas --> "*" Prenda
 Guardarropas --> GeneradorDeAtuendos
+
 class Guardarropas{
+-descripcion:String
 generador: GeneradorDeAtuendos
 +pedirSugerencias():List<Atuendo>
 +elegirAtuendo():void
++agregarPrenda(Prenda)
++quitarPrenda(Prenda)
 }
+
 class GeneradorDeAtuendos{
 +combinar(List<Prenda> prendas):List<Atuendo>
 +filtrar(List<Atuendo> atuendos):List<Atuendo>
+}
+Usuario --> "*" Guardarropas
+Usuario --> "*" Usuario
+class Usuario{
+-userID:Integer
++nuevoGuardarropas()
++compartirCon(Usuario)
++dejarDeCompartirCon(Usuario)
++sugerirQuitarPrenda(Prenda,Guardarropas)
++sugerirAgregarPrenda(Prenda,Guardarropas)
 }
 @enduml
