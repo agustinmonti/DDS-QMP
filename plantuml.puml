@@ -1,6 +1,12 @@
 @startuml
+package Usuario{
 class Guardarropas
 class Usuario
+interface Interaccion
+class BajaPrenda
+class AltaPrenda
+class Compartir
+}
 package Prenda{
     class Prenda
     enum Material
@@ -24,8 +30,13 @@ package Sugerencia{
         class FiltroAtuendoCompleto
     }
 }
+
+
+
 class Prenda{
     +aptaParaTemperatura(double Temp):boolean
+    +recomendarAgregar(Usuario, Guardarropa):void
+    +recomendarQuitar(Usuario, Guardarropa):void
 }
 Prenda --> Material
 Prenda --> TipoPrenda
@@ -51,18 +62,16 @@ RELOJ
 ...
 +getCategoria():Categoria
 }
-class MockClima{
+class MockClima implements Clima{
 -cantidadLlamados:Integer
 +getTemperatura(String Ciudad):double
 -puedoHacerLlamado():Boolean
 }
-AccuWeather .|> Clima
-MockClima .|> Clima
 AccuWeather --> AccuWeatherAPI
 interface Clima{
 +getTemperatura(String Ciudad):double
 }
-class AccuWeather{
+class AccuWeather implements Clima{
 -cantidadLlamados:Integer
 +getTemperatura(String Ciudad):double
 -puedoHacerLlamado():Boolean
@@ -71,17 +80,15 @@ class AccuWeatherAPI{
 +getWeather(String ciudad):List<Map<String, Object>>
 }
 
-FiltroTemperatura .|> Filtro
-FiltroAtuendoCompleto .|> Filtro
 FiltroAtuendoCompleto --> Categoria
 FiltroTemperatura --> Clima
 interface Filtro{
 +filtrar(List<Atuendo> atuendos):List<Atuendo>
 }
-class FiltroTemperatura{
+class FiltroTemperatura implements Filtro{
 +filtrar(List<Atuendo> atuendos):List<Atuendo>
 }
-class FiltroAtuendoCompleto{
+class FiltroAtuendoCompleto implements Filtro{
 +filtrar(List<Atuendo> atuendos):List<Atuendo>
 -estaCompleto(Atuendo atuendo):Boolean
 }
@@ -105,7 +112,7 @@ class GeneradorDeAtuendos{
 +filtrar(List<Atuendo> atuendos):List<Atuendo>
 }
 Usuario --> "*" Guardarropas
-Usuario --> "*" Usuario
+Usuario -d-> "*" Interaccion
 class Usuario{
 -userID:Integer
 +nuevoGuardarropas()
@@ -113,5 +120,23 @@ class Usuario{
 +dejarDeCompartirCon(Usuario)
 +sugerirQuitarPrenda(Prenda,Guardarropas)
 +sugerirAgregarPrenda(Prenda,Guardarropas)
+}
+interface Interaccion{
++aceptar()
++revertir()
+}
+class BajaPrenda implements Interaccion{
+    -prenda:Prenda
+    -guardarropa:Guardarropa
+    -aceptada:Boolean
+}
+class AltaPrenda implements Interaccion{
+    -prenda:Prenda
+    -guardarropa:Guardarropa
+    -aceptada:Boolean
+}
+class Compartir implements Interaccion{
+    -guardarropa:Guardarropa
+    -usuario:Usuario
 }
 @enduml

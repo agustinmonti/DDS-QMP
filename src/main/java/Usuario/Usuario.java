@@ -12,9 +12,6 @@ public class Usuario {
     public void nuevoGuardarropa(){
         guardarropas.add(new Guardarropa("Nuevo Guardarropa",this));
     }
-    private Boolean puedoCompartir(Usuario otroUsuario){
-        return otroUsuario!=this;
-    }
 
     public void agregarGuardarropas(Guardarropa guardarropa) {
         guardarropas.add(guardarropa);
