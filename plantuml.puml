@@ -1,6 +1,6 @@
 @startuml
 package Usuario{
-class Guardarropas
+class Guardarropa
 class Usuario
 interface Interaccion
 class BajaPrenda
@@ -95,23 +95,25 @@ class FiltroAtuendoCompleto implements Filtro{
 GeneradorDeAtuendos --> "1..*" Filtro
 GeneradorDeAtuendos --> "*" Atuendo
 Atuendo --> "4..*" Prenda
-Guardarropas --> "*" Prenda
-Guardarropas --> GeneradorDeAtuendos
+Guardarropa --> "*" Prenda
+Guardarropa --> GeneradorDeAtuendos
 
-class Guardarropas{
+class Guardarropa{
 -descripcion:String
-generador: GeneradorDeAtuendos
+-dueño:Usuario
+-generador: GeneradorDeAtuendos
 +pedirSugerencias():List<Atuendo>
 +elegirAtuendo():void
 +agregarPrenda(Prenda)
 +quitarPrenda(Prenda)
++compartirCon(Usuario)
 }
 
 class GeneradorDeAtuendos{
 +combinar(List<Prenda> prendas):List<Atuendo>
 +filtrar(List<Atuendo> atuendos):List<Atuendo>
 }
-Usuario --> "*" Guardarropas
+Usuario --> "*" Guardarropa
 Usuario -d-> "*" Interaccion
 class Usuario{
 -userID:Integer
